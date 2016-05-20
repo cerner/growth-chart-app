@@ -400,16 +400,15 @@
                 });
             }
             
-            if (!this._nodes.childName) {
-                this._nodes.childName = this.paper.text(
+            if (!this._nodes.childDateLabel) {
+                this._nodes.childDateLabel = this.paper.text(
                     this.paper.width / 2, 
                     this.paper.height / 2 - 10, 
-                    PATIENT.name
+                    ""
                 ).attr({
                     "text-anchor" : "center",
                     "fill"        : "#25B3DF",
-                    "font-size"   : 13,
-                    "font-weight" : "bold"
+                    "font-size"   : 13
                 });
             }
             
@@ -421,14 +420,14 @@
                 ).attr({
                     "text-anchor" : "center",
                     "fill" : "#25B3DF",
-                    "font-size" : 13
+                    "font-size" : 21
                 });
             }
             
             if (!this._nodes.childHeightImage) {
                 this._nodes.childHeightImage = this.paper.image();
                 this._nodes.childDataRect.toFront();
-                this._nodes.childName.toFront();
+                this._nodes.childDateLabel.toFront();
                 this._nodes.childHeightLabel.toFront();
                 
                 var base  = "img/pview/" + (PATIENT.gender == "male" ? "blue" : "pink"),
@@ -457,24 +456,24 @@
                         "fill-opacity" : heightChild > heightTreshold ? 0.75 : 0 
                     });
                     
-                    this._nodes.childHeightLabel.attr({
+                    this._nodes.childDateLabel.attr({
                         text : lastHeight.agemos === null ?
                             GC.str("STR_158") :
-                            ("on " + 
-                            (new XDate(PATIENT.DOB.getTime())).addMonths(lastHeight.agemos)
-                            .toString(GC.chartSettings.dateFormat) + "\n" 
-                            + heightChild + " cm"),
+                            ((new XDate(PATIENT.DOB.getTime())).addMonths(lastHeight.agemos)
+                                .toString(GC.chartSettings.dateFormat)),
                         y : heightChild > heightTreshold ?
+                            y + 10 :
+                            y - 35
+                    });
+                    
+                    this._nodes.childHeightLabel.attr({
+                        text : lastHeight.agemos === null ?
+                            "" :
+                            heightChild + " cm",
+                        y: heightChild > heightTreshold ?
                             y + 35 :
                             y - 16
                     });
-                    
-                    this._nodes.childName.attr(
-                        "y", 
-                        heightChild > heightTreshold ? 
-                            y + 10 :
-                            y - 40
-                    );
                     
                     this._nodes.childHeightLine.attr({
                         y : y
