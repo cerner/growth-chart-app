@@ -470,7 +470,9 @@
     }
 
     function renderTableViewForPrint(container) {
-        $(container).empty();
+        if (container) {
+            $(container).empty();
+        }
 
         var printScheme = [
             {
@@ -655,7 +657,11 @@
 
         html[j++] = '</table>';
 
-        $(container).html(html.join(""));
+        if (container){
+            $(container).html(html.join(""));
+        } else {
+            return html;
+        }
     }
 
     function getVelocityUnits(baseUnits) {
@@ -874,6 +880,10 @@
             }
         },
         selectByAge : PRINT_MODE ? $.noop : selectByAge
+    };
+
+    NS.TableViewForPrint = function () {
+        return renderTableViewForPrint();
     };
 
     $(function() {
