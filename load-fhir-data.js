@@ -128,10 +128,13 @@ GC.get_data = function() {
             p.demographics.birthday = patient.birthDate;
             p.demographics.gender = patient.gender;
 
-            var gestAge = vitalsByCode('18185-9');
+            var gestAge = vitalsByCode('76516-4');
             if (gestAge === undefined || gestAge.length == 0) {
+              gestAge = vitalsByCode('18185-9');
+              if (gestAge === undefined || gestAge.length == 0) {
                 //handle an alternate mapping of Gest Age used by Cerner
                 gestAge = vitalsByCode('11884-4');
+              }
             }
 
             if (gestAge && gestAge.length > 0) {
@@ -249,6 +252,9 @@ GC.get_data = function() {
                                 //Bone Age
                                 'http://loinc.org|85151-9',
                                 'http://loinc.org|37362-1',
+
+                                //Gestsational Age at Birth
+                                'http://loinc.org|76516-4',
 
                                 //Gestsational Age
                                 'http://loinc.org|18185-9',
